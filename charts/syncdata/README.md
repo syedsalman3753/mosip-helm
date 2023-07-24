@@ -9,6 +9,7 @@ $ helm repo add mosip https://mosip.github.io
 $ helm install my-release mosip/syncdata
 ```
 
+
 ## Introduction
 
 Syncdata is  part of the kernel modules, but has a separate Helm chart so as to install and manage it in a completely indepedent namespace.
