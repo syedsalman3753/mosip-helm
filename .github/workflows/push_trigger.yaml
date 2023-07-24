@@ -12,4 +12,4 @@ jobs:
   Generate_Documentation:
     runs-on: ubuntu-latest
     steps:
-    - uses: syedsalman3753/kattu/.github/actions/helm/publish-helm-charts/publish-mosip-helm-charts.yml@master
+    - uses: syedsalman3753/kattu/.github/actions/helm/publish-helm-charts@master
