@@ -39,8 +39,8 @@ jobs:
           echo "TARGET_REPO=$( echo ${{ github.event.pull_request.base.repo.html_url }} )" >> $GITHUB_ENV
           
           
-          echo "TARGET_BRANCH=${TARGET_BRANCH:-'develop'}" >> >> $GITHUB_ENV
-          echo "TARGET_REPO=https://github.com/syedsalman3753/mosip-helm/
+          echo "TARGET_BRANCH=${TARGET_BRANCH:-'develop'}"  >> $GITHUB_ENV
+          echo "TARGET_REPO=https://github.com/syedsalman3753/mosip-helm/"  >> $GITHUB_ENV
 
       - name: Add Target repo to git remotes
         run: | 
