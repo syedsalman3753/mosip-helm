@@ -10,7 +10,7 @@ on:
 
 jobs:
   Lint:
-    uses: ./helm-lint.yaml
+    uses: ./.github/workflows/helm-lint.yaml
   Generate_Documentation:
     needs: Lint
     uses: syedsalman3753/kattu/.github/workflows/publish-helm-charts.yml@master
