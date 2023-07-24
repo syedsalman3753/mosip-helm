@@ -41,6 +41,9 @@ jobs:
           
           echo "TARGET_BRANCH=${TARGET_BRANCH:-'develop'}"  >> $GITHUB_ENV
           echo "TARGET_REPO=https://github.com/syedsalman3753/mosip-helm"  >> $GITHUB_ENV
+          
+          echo "TARGET BRANCH : $TARGET_BRANCH"
+          echo "TARGET REPO : $TARGET_REPO"
 
       - name: Add Target repo to git remotes
         run: | 

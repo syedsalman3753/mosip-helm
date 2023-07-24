@@ -51,7 +51,7 @@ service:
 
 image:
   registry: docker.io
-  repository: mosipid/admin-service
+  repository: mosipdev/admin-service
   tag: develop
 
   ## Specify a imagePullPolicy
