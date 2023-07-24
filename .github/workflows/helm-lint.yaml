@@ -56,6 +56,7 @@ jobs:
           ignore_charts="charts/reporting|charts/reporting-init|charts/activemq-artemis"
           echo "Ignore charts: $ignore_charts"
           ct list-changed --remote=target_repo --since=HEAD --target-branch=$TARGET_BRANCH --chart-dirs=charts |grep -Ev "$ignore_charts" |tee -a list.txt 
+          cat list.txt
 
       - name: Run chart-testing (lint)
         run: |
