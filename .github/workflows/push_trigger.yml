@@ -10,6 +10,6 @@ on:
 
 jobs:
   Generate_Documentation:
-    uses: syedsalman3753/kattu/.github/workflows/publish-helm-charts.yml@master
+    uses: syedsalman3753/kattu/.github/workflows/helm-charts-publish-to-gh-pages.yml@master
     with:
       HELM_REPO_URL: https://${{ github.actor }}.github.io/mosip-helm
