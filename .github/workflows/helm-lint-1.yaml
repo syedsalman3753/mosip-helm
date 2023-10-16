@@ -58,7 +58,7 @@ jobs:
           cd ${{ env.CHARTS_DIR }}
           echo "CHARTS_MODIFIED : $CHARTS_MODIFIED "
           echo "under charts dir"
-          IGNORE_CHART_LIST=$( ls -d * | grep -Ev "$CHARTS_MODIFIED " )
+          IGNORE_CHART_LIST=$( ls -d * | grep -Ev "$CHARTS_MODIFIED " | sed -z 's/\n/|^/g' )
           echo "IGNORE CHART LIST : $IGNORE_CHART_LIST "
           echo "IGNORE_CHARTS=$(echo $IGNORE_CHART_LIST )" >> $GITHUB_ENV
           echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
