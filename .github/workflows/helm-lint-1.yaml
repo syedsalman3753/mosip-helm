@@ -56,7 +56,10 @@ jobs:
           git remote -v 
           CHARTS_MODIFIED=$( git diff --name-status upstream/$BRANCH_NAME | awk -F '/' '/charts/{print $2}' | sed -z 's/\n/|^/g' )
           cd ${{ env.CHARTS_DIR }}
-          echo "IGNORE_CHARTS=$( ls -d * | grep -Ev \"$CHARTS_MODIFIED \")" >> $GITHUB_ENV
+          echo "under charts dir"
+          IGNORE_CHART_LIST=$( ls -d * | grep -Ev "$CHARTS_MODIFIED " )
+          echo "IGNORE CHART LIST : $IGNORE_CHART_LIST "
+          echo "IGNORE_CHARTS=$(echo $IGNORE_CHART_LIST )" >> $GITHUB_ENV
           echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
         if: "${{ github.event_name == 'pull_request' }}"
 
