@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Publish Helm charts
-        uses: syedsalman3753/SYED-gh-pages@master
+        uses: syedsalman3753/syed-helm-gh-pages@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           charts_dir: charts
