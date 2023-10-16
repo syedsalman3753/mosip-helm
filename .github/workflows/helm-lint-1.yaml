@@ -38,6 +38,7 @@ on:
 env:
   IGNORE_CHARTS: "reporting|reporting-init|activemq-artemis"
   CHART_PUBLISH: "ON"
+  CHARTS_DIR: "charts"
 
 jobs:
   lint-chart:
@@ -45,8 +46,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Disable Chart publish, for pull requests
+      - name: Disable Chart publish for pull requests
         run: |
+          REPO_URL=${{ github.event.repository.html_url }}
+          BRANCH_NAME=${{ github.event.pull_request.head.ref }}
+          git remote add upstream $REPO_URL
+        
+          CHARTS_MODIFIED=$( git diff --name-status upstream/$BRANCH_NAME | grep charts | awk -F/ '{print $2}' | sort | uniq | sed -z 's/\n/|^/g' )
+          cd ${{ env.CHARTS_DIR }}
+          echo "IGNORE_CHARTS=$(ls -d * | grep -Ev \"$CHARTS_MODIFIED \")" >> $GITHUB_ENV
           echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
         if: "${{ github.event_name == 'pull_request' }}"
 
@@ -54,7 +62,7 @@ jobs:
         uses: syedsalman3753/syed-helm-gh-pages@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          charts_dir: charts
+          charts_dir: ${{ env.CHARTS_DIR }}
           ignore_charts: "${{ inputs.IGNORE_CHARTS || env.IGNORE_CHARTS }}"
           chart_publish: "${{ inputs.CHART_PUBLISH || env.CHART_PUBLISH }}"
 
