@@ -50,7 +50,6 @@ jobs:
         run: |
           REPO_URL=${{ github.event.pull_request.base.repo.html_url }}
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
-          
           git remote -v 
           git remote add upstream $REPO_URL
         
