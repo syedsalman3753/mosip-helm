@@ -54,11 +54,9 @@ jobs:
           git remote add upstream $REPO_URL.git
           git fetch upstream
           git remote -v 
-          
-          CHARTS_MODIFIED=$( git diff --name-status upstream/$BRANCH_NAME | grep charts | awk -F/ '{print $2}' | sort | uniq | sed -z 's/\n/|^/g' )
+          CHARTS_MODIFIED=$( git diff --name-status upstream/$BRANCH_NAME | awk -F '/' '/charts/{print $2}' | sed -z 's/\n/|^/g' )
           cd ${{ env.CHARTS_DIR }}
-          ls -d * > chart-list.txt
-          echo "IGNORE_CHARTS=$( cat chart-list.txt | grep -Ev \"$CHARTS_MODIFIED \")" >> $GITHUB_ENV
+          echo "IGNORE_CHARTS=$( ls -d * | grep -Ev \"$CHARTS_MODIFIED \")" >> $GITHUB_ENV
           echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
         if: "${{ github.event_name == 'pull_request' }}"
 
