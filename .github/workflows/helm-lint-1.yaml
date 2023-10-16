@@ -54,7 +54,7 @@ jobs:
           git remote add upstream $REPO_URL.git
           git fetch upstream
           git remote -v 
-          CHARTS_MODIFIED=$( git diff --name-status upstream/$BRANCH_NAME | awk -F '/' '/charts/{print $2}' | sort | uniq | sed ':a;N;$!ba;s/\n/|^/g' )
+          CHARTS_MODIFIED=$( git diff --name-status upstream/$BRANCH_NAME | awk -F '/' '/charts/{print $2}' | sort | uniq | sed ':a;N;$!ba;s/\n/|^/g; s/^/^/' )
           cd ${{ env.CHARTS_DIR }}
           echo "CHARTS_MODIFIED : $CHARTS_MODIFIED "
           IGNORE_CHART_LIST=$( ls -d * | grep -Ev "$CHARTS_MODIFIED" |  sed ':a;N;$!ba;s/\n/|/g' )
