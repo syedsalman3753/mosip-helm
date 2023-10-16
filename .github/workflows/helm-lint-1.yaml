@@ -57,7 +57,8 @@ jobs:
           
           CHARTS_MODIFIED=$( git diff --name-status upstream/$BRANCH_NAME | grep charts | awk -F/ '{print $2}' | sort | uniq | sed -z 's/\n/|^/g' )
           cd ${{ env.CHARTS_DIR }}
-          echo "IGNORE_CHARTS=$( ls -d * | grep -Ev \"$CHARTS_MODIFIED \")" >> $GITHUB_ENV
+          ls -d * > chart-list.txt
+          echo "IGNORE_CHARTS=$( cat chart-list.txt | grep -Ev \"$CHARTS_MODIFIED \")" >> $GITHUB_ENV
           echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
         if: "${{ github.event_name == 'pull_request' }}"
 
