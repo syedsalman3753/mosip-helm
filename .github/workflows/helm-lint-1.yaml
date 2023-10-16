@@ -35,7 +35,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           charts_dir: charts
-          ignore_charts: "reporting reporting-init activemq-artemis"
+          ignore_charts: "reporting|reporting-init|activemq-artemis"
           chart_publish: OFF
 
       # Commented below tasks as it cannot test MOSIP helm/charts deployment due to dependencies issues
