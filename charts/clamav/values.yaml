@@ -5,8 +5,7 @@
 # global:
 #   imageRegistry: myRegistryName
 #   imagePullSecrets:
-#     - myRegi
-  stryKeySecretName
+#     - myRegistryKeySecretName
 #   storageClass: myStorageClass
 
 ## Add labels to all the deployed resources
