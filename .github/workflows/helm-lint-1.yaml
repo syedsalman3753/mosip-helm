@@ -20,7 +20,7 @@ on:
         default: 'activemq-artemis'
         type: string
       CHART_PUBLISH:
-        description: 'Ignore linting for list of charts separated by pipe(|)'
+        description: 'Chart publishing to gh-pages branch'
         required: false
         default: 'OFF'
         type: string
@@ -48,7 +48,7 @@ jobs:
       - name: Disable Chart publish, for pull requests
         run: |
           echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
-        if: "${{ github.event_name != 'pull_request' }}"
+        if: "${{ github.event_name == 'pull_request' }}"
 
       - name: Publish Helm charts
         uses: syedsalman3753/syed-helm-gh-pages@master
