@@ -27,13 +27,16 @@ on:
 
 jobs:
   lint-chart:
-    name: Publish helm chart
-    uses: syedsalman3753/syed-helm-gh-pages/actions.yml@master
-    with:
-      token: ${{ secrets.GITHUB_TOKEN }}
-      charts_dir: charts
-      ignore_charts: "reporting reporting-init activemq-artemis"
-      chart_publish: OFF
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Publish Helm charts
+        uses: syedsalman3753/SYED-gh-pages@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          charts_dir: charts
+          ignore_charts: "reporting reporting-init activemq-artemis"
+          chart_publish: OFF
 
       # Commented below tasks as it cannot test MOSIP helm/charts deployment due to dependencies issues
       #- name: Create kind v1.21.1 cluster
