@@ -1,0 +1,49 @@
+name: Lint and Test Charts
+
+on:
+  release:
+    types: [published]
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'charts/**'
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Message for manually triggering'
+        required: false
+        default: 'Triggered for Updates'
+        type: string
+  push:
+    branches:
+      - '!release-branch'
+      - master
+      - 1.*
+      - develop
+      - MOSIP*
+      - release*
+    paths:
+      - 'charts/**'
+
+jobs:
+  lint-chart:
+    name: Publish helm chart
+    uses: syedsalman3753/syed-helm-gh-pages/actions.yml@master
+    with:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      charts_dir: charts
+      ignore_charts: "reporting reporting-init activemq-artemis"
+      chart_publish: OFF
+
+      # Commented below tasks as it cannot test MOSIP helm/charts deployment due to dependencies issues
+      #- name: Create kind v1.21.1 cluster
+      #  uses: helm/kind-action@v1.4.0
+      #  with:
+      #    node_image: kindest/node:v1.21.1
+      #
+      #- name: Run chart-testing (install)
+      #  run: |
+      #    while read -r chart; do
+      #      echo -e "\nCHART: $chart\n";
+      #      ct install --config=.github/chart-testing-config.yaml --charts=$chart --remote=target_repo --target-branch=$TARGET_BRANCH;
+      #    done < ./list.txt
