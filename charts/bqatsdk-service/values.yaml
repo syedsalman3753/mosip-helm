@@ -10,6 +10,7 @@
 
 ## Add labels to all the deployed resources
 ##
+
 commonLabels:
   app.kubernetes.io/component: mosip
 
