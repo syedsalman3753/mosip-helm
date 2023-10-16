@@ -48,8 +48,10 @@ jobs:
 
       - name: Disable Chart publish for pull requests
         run: |
-          REPO_URL=${{ github.event.repository.html_url }}
-          BRANCH_NAME=${{ github.event.pull_request.head.ref }}
+          REPO_URL=${{ github.event.pull_request.base.repo.html_url }}
+          BRANCH_NAME=${{ github.event.pull_request.base.ref }}
+          
+          git remote -v 
           git remote add upstream $REPO_URL
         
           CHARTS_MODIFIED=$( git diff --name-status upstream/$BRANCH_NAME | grep charts | awk -F/ '{print $2}' | sort | uniq | sed -z 's/\n/|^/g' )
