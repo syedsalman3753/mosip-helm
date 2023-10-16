@@ -50,13 +50,14 @@ jobs:
         run: |
           REPO_URL=${{ github.event.pull_request.base.repo.html_url }}
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
-          git remote add upstream $REPO_URL
+          git remote add upstream $REPO_URL.git
+          git gc --aggressive --prune
           git fetch upstream
           git remote -v 
-        
+          
           CHARTS_MODIFIED=$( git diff --name-status upstream/$BRANCH_NAME | grep charts | awk -F/ '{print $2}' | sort | uniq | sed -z 's/\n/|^/g' )
           cd ${{ env.CHARTS_DIR }}
-          echo "IGNORE_CHARTS=$(ls -d * | grep -Ev \"$CHARTS_MODIFIED \")" >> $GITHUB_ENV
+          echo "IGNORE_CHARTS=$( ls -d * | grep -Ev \"$CHARTS_MODIFIED \")" >> $GITHUB_ENV
           echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
         if: "${{ github.event_name == 'pull_request' }}"
 
