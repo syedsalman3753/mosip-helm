@@ -9,10 +9,20 @@ on:
       - 'charts/**'
   workflow_dispatch:
     inputs:
-      message:
+      Message:
         description: 'Message for manually triggering'
         required: false
         default: 'Triggered for Updates'
+        type: string
+      IGNORE_CHARTS:
+        description: 'Ignore linting for list of charts separated by pipe(|)'
+        required: false
+        default: 'activemq-artemis'
+        type: string
+      CHART_PUBLISH:
+        description: 'Ignore linting for list of charts separated by pipe(|)'
+        required: false
+        default: 'OFF'
         type: string
   push:
     branches:
@@ -25,18 +35,28 @@ on:
     paths:
       - 'charts/**'
 
+env:
+  IGNORE_CHARTS: "reporting|reporting-init|activemq-artemis"
+  CHART_PUBLISH: "ON"
+
 jobs:
   lint-chart:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Disable Chart publish, for pull requests
+        run: |
+          echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
+        if: "${{ github.event_name != 'pull_request' }}"
+
       - name: Publish Helm charts
         uses: syedsalman3753/syed-helm-gh-pages@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           charts_dir: charts
-          ignore_charts: "reporting|reporting-init|activemq-artemis"
-          chart_publish: OFF
+          ignore_charts: "${{ inputs.IGNORE_CHARTS || env.IGNORE_CHARTS }}"
+          chart_publish: "${{ inputs.CHART_PUBLISH || env.CHART_PUBLISH }}"
 
       # Commented below tasks as it cannot test MOSIP helm/charts deployment due to dependencies issues
       #- name: Create kind v1.21.1 cluster
