@@ -37,9 +37,9 @@ on:
 
 env:
   IGNORE_CHARTS: "reporting|reporting-init|activemq-artemis"
-  CHART_PUBLISH: "NO"
+  CHART_PUBLISH: "YES"
   CHARTS_DIR: "charts"
-  INCLUDE_ALL_CHARTS: "YES"
+  INCLUDE_ALL_CHARTS: "NO"
 
 jobs:
   lint-chart:
