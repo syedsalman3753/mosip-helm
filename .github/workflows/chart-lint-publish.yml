@@ -41,11 +41,6 @@ on:
     paths:
       - 'charts/**'
 
-env:
-  IGNORE_CHARTS: "reporting|reporting-init|activemq-artemis"
-  CHART_PUBLISH: "YES"
-  INCLUDE_ALL_CHARTS: "NO"
-
 jobs:
   chart-lint-publish:
     uses: syedsalman3753/kattu/.github/workflows/chart-lint-publish.yml@master
@@ -54,9 +49,9 @@ jobs:
       CHARTS_URL: https://syedsalman3753.github.io/mosip-helm
       REPOSITORY: mosip-helm
       BRANCH: gh-pages
-      INCLUDE_ALL_CHARTS: "${{ inputs.INCLUDE_ALL_CHARTS || env.INCLUDE_ALL_CHARTS }}"
-      IGNORE_CHARTS: "${{ inputs.IGNORE_CHARTS || env.IGNORE_CHARTS }}"
-      CHART_PUBLISH: "${{ inputs.CHART_PUBLISH || env.CHART_PUBLISH }}"
+      INCLUDE_ALL_CHARTS: "${{ inputs.INCLUDE_ALL_CHARTS || 'NO' }}"
+      IGNORE_CHARTS: "${{ inputs.IGNORE_CHARTS ||'reporting|reporting-init|activemq-artemis' }}"
+      CHART_PUBLISH: "${{ inputs.CHART_PUBLISH || 'YES' }}"
       LINTING_CHART_SCHEMA_YAML_URL: "https://raw.githubusercontent.com/syedsalman3753/kattu/master/.github/helm-lint-configs/chart-schema.yaml"
       LINTING_LINTCONF_YAML_URL: "https://raw.githubusercontent.com/syedsalman3753/kattu/master/.github/helm-lint-configs/lintconf.yaml"
       LINTING_CHART_TESTING_CONFIG_YAML_URL: "https://raw.githubusercontent.com/syedsalman3753/kattu/master/.github/helm-lint-configs/chart-testing-config.yaml"
