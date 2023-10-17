@@ -20,16 +20,16 @@ on:
         default: 'NO'
         type: string
         options:
-          - Yes
-          - No
+          - YES
+          - NO
       INCLUDE_ALL_CHARTS:
         description: 'Include all charts for Linting/Publishing (YES/NO)'
         required: false
         default: 'NO'
         type: string
         options:
-          - Yes
-          - No
+          - YES
+          - NO
   push:
     branches:
       - '!release-branch'
