@@ -54,7 +54,7 @@ jobs:
       CHARTS_URL: https://syedsalman3753.github.io/mosip-helm
       REPOSITORY: mosip-helm
       BRANCH: gh-pages
-      INCLUDE_ALL_CHARTS: "${{ inputs.INCLUDE_ALL_CHARTS || xxxx }}"
+      INCLUDE_ALL_CHARTS: "${{ inputs.INCLUDE_ALL_CHARTS || env.INCLUDE_ALL_CHARTS }}"
       IGNORE_CHARTS: "${{ inputs.IGNORE_CHARTS || env.IGNORE_CHARTS }}"
       CHART_PUBLISH: "${{ inputs.CHART_PUBLISH || env.CHART_PUBLISH }}"
       LINTING_CHART_SCHEMA_YAML_URL: "https://raw.githubusercontent.com/syedsalman3753/kattu/master/.github/helm-lint-configs/chart-schema.yaml"
