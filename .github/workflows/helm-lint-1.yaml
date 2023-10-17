@@ -20,7 +20,7 @@ on:
         default: 'OFF'
         type: string
       INCLUDE_ALL_CHARTS:
-        description: 'Include all helm charts except provided in Ignore list for Linting/Publishing'
+        description: 'Include all helm charts except provided in Ignore list for Linting/Publishing (YES/NO)'
         required: false
         default: 'NO'
         type: string
@@ -68,7 +68,7 @@ jobs:
           CHARTS_MODIFIED=$( git log -m -1 --name-only --pretty="" | awk -F '/' '/charts/{print $2}' | sort | uniq | sed -E 's/(\S+)/^&$/g' | tr ' ' '|' )
           cd ${{ env.CHARTS_DIR }}
           echo "CHARTS_MODIFIED : $CHARTS_MODIFIED"
-          IGNORE_CHART_LIST=$( echo ${{ env.IGNORE_CHARTS }} )
+          IGNORE_CHART_LIST=$( echo "${{ env.IGNORE_CHARTS }}" )
           if [[ ${{ inputs.INCLUDE_ALL_CHARTS }} == "NO" ]]; then
              IGNORE_CHART_LIST=$( ls -d * | grep -Ev "$CHARTS_MODIFIED" |  sed ':a;N;$!ba;s/\n/|/g' )
           fi
