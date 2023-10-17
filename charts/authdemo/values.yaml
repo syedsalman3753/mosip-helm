@@ -246,7 +246,6 @@ extraEnvVars: []
 extraEnvVarsCM:
   - config-server-share
 
-
 ## Secret with extra environment variables
 ##
 extraEnvVarsSecret:
