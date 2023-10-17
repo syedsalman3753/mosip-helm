@@ -17,7 +17,7 @@ on:
       CHART_PUBLISH:
         description: 'Chart publishing to gh-pages branch'
         required: false
-        #default: 'NO'
+        default: 'NO'
         type: string
         options:
           - YES
