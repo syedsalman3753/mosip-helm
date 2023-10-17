@@ -9,11 +9,6 @@ on:
       - 'charts/**'
   workflow_dispatch:
     inputs:
-      Message:
-        description: 'Message for manually triggering'
-        required: false
-        default: 'Triggered for Updates'
-        type: string
       IGNORE_CHARTS:
         description: 'Ignore linting for list of charts separated by pipe(|)'
         required: false
@@ -23,6 +18,11 @@ on:
         description: 'Chart publishing to gh-pages branch'
         required: false
         default: 'OFF'
+        type: string
+      INCLUDE_ALL_CHARTS:
+        description: 'Include all helm charts except provided in Ignore list for Linting/Publishing'
+        required: false
+        default: 'NO'
         type: string
   push:
     branches:
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Disable Chart publish for pull requests
+      - name: Validate Helm charts in Pull Requests
         run: |
           REPO_URL=${{ github.event.pull_request.base.repo.html_url }}
           BRANCH_NAME=${{ github.event.pull_request.base.ref }}
@@ -62,6 +62,19 @@ jobs:
           echo "IGNORE_CHARTS=$(echo $IGNORE_CHART_LIST )" >> $GITHUB_ENV
           echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
         if: "${{ github.event_name == 'pull_request' }}"
+
+      - name: Validate / Publish helm charts
+        run: |
+          CHARTS_MODIFIED=$( git log -m -1 --name-only --pretty="" | awk -F '/' '/charts/{print $2}' | sort | uniq | sed -E 's/(\S+)/^&$/g' | tr ' ' '|' )
+          cd ${{ env.CHARTS_DIR }}
+          echo "CHARTS_MODIFIED : $CHARTS_MODIFIED"
+          IGNORE_CHART_LIST=$( echo ${{ env.IGNORE_CHARTS }} )
+          if [[ ${{ inputs.INCLUDE_ALL_CHARTS }} == "NO" ]]; then
+             IGNORE_CHART_LIST=$( ls -d * | grep -Ev "$CHARTS_MODIFIED" |  sed ':a;N;$!ba;s/\n/|/g' )
+          fi
+          echo "IGNORE CHART LIST : $IGNORE_CHART_LIST "
+          echo "IGNORE_CHARTS=$(echo $IGNORE_CHART_LIST )" >> $GITHUB_ENV
+        if: "${{ github.event_name != 'pull_request' }}"
 
       - name: Publish Helm charts
         uses: syedsalman3753/syed-helm-gh-pages@master
