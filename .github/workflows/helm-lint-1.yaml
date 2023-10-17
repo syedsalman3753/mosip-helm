@@ -17,7 +17,7 @@ on:
       CHART_PUBLISH:
         description: 'Chart publishing to gh-pages branch'
         required: false
-        default: 'OFF'
+        default: 'NO'
         type: string
       INCLUDE_ALL_CHARTS:
         description: 'Include all charts for Linting/Publishing (YES/NO)'
@@ -37,8 +37,9 @@ on:
 
 env:
   IGNORE_CHARTS: "reporting|reporting-init|activemq-artemis"
-  CHART_PUBLISH: "ON"
+  CHART_PUBLISH: "NO"
   CHARTS_DIR: "charts"
+  INCLUDE_ALL_CHARTS: "YES"
 
 jobs:
   lint-chart:
@@ -69,7 +70,7 @@ jobs:
           cd ${{ env.CHARTS_DIR }}
           echo "CHARTS_MODIFIED : $CHARTS_MODIFIED"
           IGNORE_CHART_LIST=$( echo "${{ env.IGNORE_CHARTS }}" )
-          if [[ ${{ inputs.INCLUDE_ALL_CHARTS }} == "NO" ]]; then
+          if [[ ${{ inputs.INCLUDE_ALL_CHARTS  || env.INCLUDE_ALL_CHARTS }} == "NO" ]]; then
              IGNORE_CHART_LIST=$( ls -d * | grep -Ev "$CHARTS_MODIFIED" |  sed ':a;N;$!ba;s/\n/|/g' )
           fi
           echo "IGNORE CHART LIST : $IGNORE_CHART_LIST "
