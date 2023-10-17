@@ -61,7 +61,7 @@ jobs:
           IGNORE_CHART_LIST=$( ls -d * | grep -Ev "$CHARTS_MODIFIED" |  sed ':a;N;$!ba;s/\n/|/g' )
           echo "IGNORE CHART LIST : $IGNORE_CHART_LIST "
           echo "IGNORE_CHARTS=$(echo $IGNORE_CHART_LIST )" >> $GITHUB_ENV
-          echo "CHART_PUBLISH=OFF" >> $GITHUB_ENV
+          echo "CHART_PUBLISH=NO" >> $GITHUB_ENV
         if: "${{ github.event_name == 'pull_request' }}"
 
       - name: Validate / Publish helm charts
