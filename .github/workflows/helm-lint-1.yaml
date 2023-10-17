@@ -12,7 +12,7 @@ on:
       IGNORE_CHARTS:
         description: 'Ignore linting for list of charts separated by pipe(|)'
         required: false
-        default: 'reporting|reporting-init|activemq-artemis'
+        default: ''
         type: string
       CHART_PUBLISH:
         description: 'Chart publishing to gh-pages branch'
