@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       IGNORE_CHARTS:
-        description: 'Ignore linting for list of charts separated by pipe(|)'
+        description: 'Provide list of charts to be ignored separated by pipe(|)'
         required: false
         default: ''
         type: string
@@ -20,7 +20,7 @@ on:
         default: 'OFF'
         type: string
       INCLUDE_ALL_CHARTS:
-        description: 'Include all helm charts except provided in Ignore list for Linting/Publishing (YES/NO)'
+        description: 'Include all charts for Linting/Publishing (YES/NO)'
         required: false
         default: 'NO'
         type: string
