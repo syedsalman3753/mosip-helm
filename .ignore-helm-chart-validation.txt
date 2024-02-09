@@ -1,0 +1,3 @@
+./charts/reporting/charts/elasticsearch*.tgz
+./charts/reporting/charts/cp-helm-charts*.tgz
+./charts/reporting/charts/kafka*.tgz
