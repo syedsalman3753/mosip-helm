@@ -1,0 +1,26 @@
+name: verify-keycloak-init
+
+on:
+  release:
+    types: [published]
+  pull_request:
+    types: [opened, reopened, synchronize]
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Message for manually triggering'
+        required: false
+        default: 'Triggered for Updates'
+        type: string
+  push:
+    branches:
+      - '!release-branch'
+      - master
+      - 1.*
+      - develop
+      - MOSIP*
+      - release*
+
+jobs:
+  analyze:
+    uses: abhishek8shankar/kattu/.github/workflows/verify-keycloak-init.yml@MOSIP-34578
