@@ -41,7 +41,7 @@ on:
 
 jobs:
   chart-lint-publish:
-    uses: abhishek8shankar/kattu/.github/workflows/chart-lint-publish.yml@MOSIP-34578
+    uses: mosip/kattu/.github/workflows/chart-lint-publish.yml@master
     with:
       CHARTS_DIR: charts
       CHARTS_URL: https://mosip.github.io/mosip-helm
