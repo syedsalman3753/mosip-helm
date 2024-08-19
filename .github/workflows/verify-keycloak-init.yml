@@ -24,5 +24,3 @@ on:
 jobs:
   verify-keycloak-init:
     uses: abhishek8shankar/kattu/.github/workflows/verify-keycloak-init.yml@MOSIP-34578
-    secrets:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
